@@ -1,0 +1,23 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:core="sap.ui.core" width="auto" xmlns:rte="sap.ui.richtexteditor"
+	xmlns:upload="sap.m.upload">
+	<VBox>
+		<Label text="{i18n>LblEmailBody}" wrapping="true" required="true"></Label>
+		<rte:RichTextEditor id="rteEditor" editorType="TinyMCE4" width="100%" height="500px" customToolbar="true" showGroupFont="true"
+			showGroupStructure="true" showGroupFontStyle="true" required="true" fieldGroupIds="fgRichText" Sanitizevalue="false" editable="true"
+			ready="onRTEReady" showGroupLink="true" showGroupInsert="true" value="{Cntnt}"/>
+	</VBox>
+	<VBox>
+		<upload:UploadSet id="UploadCollection" maximumFilenameLength="55" multiple="true" sameFilenameAllowed="false" uploadButtonInvisible="false"
+			instantUpload="false" noDataDescription="{i18n>TXT_ATTACH}" change="onChange" showIcons="true" fileSizeExceed="onFileSizeExceed"
+			typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts"
+			fileType="docx,pdf,xlsx,png,jpeg,pptx,ppt,txt,jpg" mode="None">
+			<upload:toolbar>
+				<OverflowToolbar>
+					<Title text="{i18n>LblUpload}" level="H3"/>
+					<ToolbarSpacer/>
+					<upload:UploadSetToolbarPlaceholder/>
+				</OverflowToolbar>
+			</upload:toolbar>
+		</upload:UploadSet>
+	</VBox>
+</core:FragmentDefinition>

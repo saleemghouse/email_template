@@ -1,0 +1,21 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto">
+	<Table id="tbPlacehld" items="{path:'oTemp>/Placeholders/',sorter:{path:'Name',descending:true}}" mode="None" headerText="{i18n>LBL_PLACEHOLDER}"
+		noDataText="{i18n>NO_DATA}" growing="true" growingScrollToLoad="true">
+		<columns>
+			<Column vAlign="Middle">
+				<Label text="{i18n>name}"/>
+			</Column>
+			<Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
+				<Label text="{i18n>techName}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Inactive" press="onPress">
+				<cells>
+					<Text text="{oTemp>Name}"/>
+					<Text text="{oTemp>Phnam}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

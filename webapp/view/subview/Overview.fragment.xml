@@ -1,0 +1,36 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto">
+	<Table id="tbOverview" items="{oTemp>/Templates}" mode="None" headerText="{i18n>TxtTemplates}" noDataText="{i18n>NO_DATA}" growing="true"
+		growingScrollToLoad="true">
+		<headerToolbar>
+			<OverflowToolbar>
+				<content>
+					<ToolbarSpacer/>
+					<Button text="{i18n>btnCreate}" type="Emphasized" press="onCreate"/>
+				</content>
+			</OverflowToolbar>
+		</headerToolbar>
+		<columns>
+			<Column vAlign="Middle">
+				<Label text="{i18n>LblTemplateId}"/>
+			</Column>
+		<!--	<Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
+				<Label text="{i18n>LblTemplateType}"/>
+			</Column>-->
+			<Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
+				<Label text="{i18n>LblCreatedDte}"/>
+			</Column>
+			<Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
+				<Label text="{i18n>LblModifiedDte}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem type="Navigation" press="onPress">
+				<cells>
+					<ObjectIdentifier title="{oTemp>Template_name}" />
+					<Text text="{path:'oTemp>Created_Date', type:'sap.ui.model.type.Date' , formatOptions: { UTC: true, pattern : 'dd.MM.yyyy'} }"/>
+					<Text text="{path:'oTemp>Modified_Date', type:'sap.ui.model.type.Date' , formatOptions: { UTC: true, pattern : 'dd.MM.yyyy'} }"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>
