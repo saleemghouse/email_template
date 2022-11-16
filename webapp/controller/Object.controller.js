@@ -1,33 +1,33 @@
 sap.ui.define([
-    "./BaseController",
-    "sap/ui/model/json/JSONModel",
-    "sap/ui/core/routing/History",
-    "../model/formatter",
-    "../model/models"
-], function (BaseController, JSONModel, History, formatter,models) {
-    "use strict";
+	"./BaseController",
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/core/routing/History",
+	"../model/formatter",
+	"../model/models"
+], function (BaseController, JSONModel, History, formatter, models) {
+	"use strict";
 
-    return BaseController.extend("emailtemplate.controller.Object", {
+	return BaseController.extend("emailtemplate.controller.Object", {
 
-        formatter: formatter,
+		formatter: formatter,
 
-        /* =========================================================== */
-        /* lifecycle methods                                           */
-        /* =========================================================== */
+    /* =========================================================== */
+		/* lifecycle methods                                           */
+		/* =========================================================== */
 
-        /**
-         * Called when the worklist controller is instantiated.
-         * @public
-         */
-        onInit : function () {
-            var oView = new JSONModel({
-				mode: "C"
-			});
+		/**
+		 * Called when the worklist controller is instantiated.
+		 * @public
+		 */
+		onInit: function () {
+			var oView = models.createObjectView();
 			this.getView().setModel(oView, "oView");
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
 			this.getRouter().getRoute("display").attachPatternMatched(this._onDisplayMatched, this);
-        },
-        /* =========================================================== */
+
+		},
+
+		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
 
@@ -47,17 +47,18 @@ sap.ui.define([
 		 * @private
 		 */
 		_onObjectMatched: function (oEvent) {
-			var oUploadSet = this.byId("usTemplate");
+			var oUploadSet = this.byId("usTemplate"),
+				tbPlacehld = this.byId("tbPlacehld"),
+				oView = this.getModel("oView"),
+				sType = oEvent.getParameter("arguments").type,
+				oTemplate = models.createTemplateId();
+			oView.setProperty("/TemplateType", sType);
+			oView.setProperty("/mode", "C");
+			this.getView().setModel(oTemplate, "oTemp");
+			tbPlacehld.setVisible(false);
 			oUploadSet.getDefaultFileUploader().setButtonOnly(false);
 			oUploadSet.getDefaultFileUploader().setIconOnly(true);
 			oUploadSet.getDefaultFileUploader().setIcon("sap-icon://attachment");
-			/*	var sObjectId =  oEvent.getParameter("arguments").objectId;
-				this.getModel().metadataLoaded().then( function() {
-					var sObjectPath = this.getModel().createKey("ZCDS_CA_C_EMAILSTAGINGATTCHMNT", {
-						AttachmentGUID :  sObjectId
-					});
-					this._bindView("/" + sObjectPath);
-				}.bind(this));*/
 		},
 		_onDisplayMatched: function (oEvent) {
 			var sItem = oEvent.getParameter("arguments").item,
@@ -67,6 +68,55 @@ sap.ui.define([
 			oView.setProperty("/mode", "D");
 			this.getView().setModel(oTemplate, "oTemp");
 		},
-    });
+
+		/**
+		 * Binds the view to the object path.
+		 * @function
+		 * @param {string} sObjectPath path to the object to be bound
+		 * @private
+		 */
+		_bindView: function (sObjectPath) {
+			var oViewModel = this.getModel("objectView"),
+				oDataModel = this.getModel();
+			this.getView().bindElement({
+				path: sObjectPath,
+				events: {
+					change: this._onBindingChange.bind(this),
+					dataRequested: function () {
+						oDataModel.metadataLoaded().then(function () {
+							// Busy indicator on view should only be set if metadata is loaded,
+							// otherwise there may be two busy indications next to each other on the
+							// screen. This happens because route matched handler already calls '_bindView'
+							// while metadata is loaded.
+							oViewModel.setProperty("/busy", true);
+						});
+					},
+					dataReceived: function () {
+						oViewModel.setProperty("/busy", false);
+					}
+				}
+			});
+		},
+
+		_onBindingChange: function () {
+			var oView = this.getView(),
+				oViewModel = this.getModel("objectView"),
+				oElementBinding = oView.getElementBinding();
+
+			// No data for the binding
+			if (!oElementBinding.getBoundContext()) {
+				this.getRouter().getTargets().display("objectNotFound");
+				return;
+			}
+
+			var oResourceBundle = this.getResourceBundle(),
+				oObject = oView.getBindingContext().getObject(),
+				sObjectId = oObject.AttachmentGUID,
+				sObjectName = oObject.AttachmentGUID;
+
+			oViewModel.setProperty("/busy", false);
+		}
+
+});
 
 });

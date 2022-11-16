@@ -2,31 +2,66 @@
 /* Enter your custom styles here */
 .marginClass {
     border-radius: 44px;
-
-
 }
-
 .sapMITBSelected.sapMITBFilterPositive .sapMITBContentArrow::after {
     background: mediumpurple;
+}
+
+.headerClass .sapMBtnContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+    line-height: 2.375rem;
+    color: white !important;
+}
+
+.headerClassBtn .sapMBtnContent {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: top;
+    line-height: 2.375rem;
+    color: white !important;
+    background-color: purple !important;
 }
 
 .sapMITBSelected.sapMITBFilterPositive .sapMITBContentArrow::before {
     background: mediumpurple;
 }
 
+.sapMComboBoxBase.sapMInputBaseHasEndIcons .sapMInputBaseInner {
+    flex: 1;
+    border-right: 0px !important;
+}
+
+.sapUiTableHeaderDataCell .sapMText,
+.sapMColumnHeader .sapMText {
+    font-weight: bold !important;
+    font-size: 0.975rem !important;
+    color: white;
+}
+
+.sapSuiteUiCommonsMicroProcessFlowItemSeparator {
+    height: 1px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    flex-grow: 1;
+}
+
 .classPurpledot1 .sapSuiteUiCommonsMicroProcessFlowItemSeparator {
     height: 2px !important;
     background-color: #841dbd !important;
-    margin-left: 3px;
-    margin-right: 3px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
     flex-grow: 1;
 }
 
 .classPurpledot2 .sapSuiteUiCommonsMicroProcessFlowItemSeparator {
     height: 2px !important;
     background-color: #841dbd !important;
-    margin-left: 3px;
-    margin-right: 3px;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
     flex-grow: 1;
 }
 
@@ -64,6 +99,10 @@
 .sapMITBSelected .sapMITBFilterPositive {
     background: mediumpurple;
     color: #fff;
+}
+
+.whiteText {
+    color: #fff !important;
 }
 
 .sapMITBText {
@@ -106,6 +145,11 @@
     margin-left: 73px;
 }
 
+.BlackText {
+    color: black !important;
+    margin-left: 73px;
+}
+
 .pageBgColorWhite {
     background-color: white !important;
 }
@@ -113,7 +157,7 @@
 .sapMInputBaseInner {
     background: white !important;
     border: 1px solid gray !important;
-    border-radius: 5px !important;
+    /* border-radius: 5px !important; */
     border: none;
     font-style: normal;
     -webkit-appearance: none;
@@ -145,6 +189,7 @@
 
 .backgroundshadow {
     background: white;
+
 }
 
 .blackTheme {
@@ -197,8 +242,18 @@
 
 }
 
+.bottombackground {
+    background-color: #152333;
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
 .BackgroundColor {
     background-color: white !important;
+    border-left: 29px solid #152333;
+    border-top: 29px solid #152333;
+    border-right: 29px solid #152333;
+    height: 87% !important;
 }
 
 /*.myButtonStyle:hover {*/
@@ -251,7 +306,7 @@
     border-radius: 50%;
     border: 2px solid #841dbd !important;
     color: #841dbd !important;
-    background-color: #fdfaff !important;
+    background-color: #841dbd !important;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -268,7 +323,7 @@
     line-height: 0;
 }
 
-.sapMBtnContent {
+.header2 .sapMBtnContent {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -279,22 +334,79 @@
 
 .sapMInputBase:not(.sapMInputBaseReadonly) .sapMInputBaseIconContainer .sapMInputBaseIcon {
     width: 2.25rem;
-    height: 2.31rem;
-    border-radius: 0.25rem;
+    height: 2.38rem;
+    border-radius: 0rem;
 }
 
 .sapMInputBaseIcon {
     width: 2.25rem;
-    min-width: 2rem;
+    min-width: 2.5rem;
     height: 100%;
-    line-height: 2.25rem;
+    line-height: 2.5rem;
     cursor: pointer;
     background: white;
-    border: 1px solid gray;
-    border-radius: 0.25rem;
+    border-top: 1px solid gray;
+    border-radius: 0rem;
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
+    border-right: 1px solid gray;
 }
+
+.sapUxAPAnchorBar.sapMTB {
+    border: none;
+    background: #841dbd !important;
+    box-shadow: none;
+}
+
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMSB.sapMSBTransparent .sapMBtnContent,
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMSB.sapMSBTransparent .sapMBtnContent,
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnInner .sapMBtnContent,
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnInner .sapMBtnContent,
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMSB.sapMSBTransparent .sapMBtnIcon,
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMSB.sapMSBTransparent .sapMBtnIcon,
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnInner .sapMBtnIcon,
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton .sapMBtnInner .sapMBtnIcon {
+    color: #ebedef !important;
+    font-family: "72", "72full", Arial, Helvetica, sans-serif;
+    font-size: 0.875rem;
+    height: 2.5rem;
+    line-height: 2.75rem;
+}
+
+
+.sapUxAPAnchorBar.sapUxAPAnchorBarScrollRight .anchorBarArrowRight,
+html[dir=rtl] .sapUxAPAnchorBar.sapUxAPAnchorBarScrollLeft .anchorBarArrowLeft {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #841dbd36 25%, #841dbd 100%) !important;
+}
+
+.sapUxAPAnchorBar.sapUxAPAnchorBarScrollLeft .anchorBarArrowLeft,
+html[dir=rtl] .sapUxAPAnchorBar.sapUxAPAnchorBarScrollRight .anchorBarArrowRight {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, #841dbd36 25%, #841dbd 100%)
+}
+
+.sapUiSizeCompact .sapUxAPAnchorBar .sapUxAPAnchorBarButton.sapUxAPAnchorBarButtonSelected .sapMBtnDefault .sapMBtnContent::after,
+.sapUxAPAnchorBar .sapUxAPAnchorBarButton.sapUxAPAnchorBarButtonSelected .sapMBtnDefault .sapMBtnContent::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    top: 2.5rem;
+    left: -0.188rem;
+    padding: 0.094rem 0.188rem;
+    border-top-left-radius: 0.125rem;
+    border-top-right-radius: 0.125rem;
+    background-color: white !important;
+}
+
+.subButton1,
+.subButton1.sapMBtnInner,
+.subButton1.sapMBtnBase,
+.subButton1 .sapMBtnHoverable {
+    background: #303c54 !important;
+    border: #303c54 !important;
+    border-radius: 11px;
+}
+
+
 
 /* Enter your custom styles here */

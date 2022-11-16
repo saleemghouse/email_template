@@ -3,11 +3,11 @@
 	<VBox>
 		<Label text="{i18n>LblEmailBody}" wrapping="true" required="true"></Label>
 		<rte:RichTextEditor id="rteEditor" editorType="TinyMCE4" width="100%" height="500px" customToolbar="true" showGroupFont="true"
-			showGroupStructure="true" showGroupFontStyle="true" required="true" fieldGroupIds="fgRichText" Sanitizevalue="false" editable="true"
-			ready="onRTEReady" showGroupLink="true" showGroupInsert="true" value="{Cntnt}"/>
+			showGroupStructure="true" showGroupFontStyle="true" required="true" fieldGroupIds="fgRichText" Sanitizevalue="false" ready="onRTEReady"
+			showGroupLink="true" showGroupInsert="true" value="{oTemp>/Email_body}" editable="true"/>
 	</VBox>
-	<VBox>
-		<upload:UploadSet id="UploadCollection" maximumFilenameLength="55" multiple="true" sameFilenameAllowed="false" uploadButtonInvisible="false"
+	<VBox visible="{=${oView>/TemplateType}!=='DMS'}">
+		<upload:UploadSet id="usTemplate" maximumFilenameLength="55" multiple="true" sameFilenameAllowed="false" uploadButtonInvisible="false"
 			instantUpload="false" noDataDescription="{i18n>TXT_ATTACH}" change="onChange" showIcons="true" fileSizeExceed="onFileSizeExceed"
 			typeMissmatch="onTypeMissmatch" uploadComplete="onUploadComplete" beforeUploadStarts="onBeforeUploadStarts"
 			fileType="docx,pdf,xlsx,png,jpeg,pptx,ppt,txt,jpg" mode="None">

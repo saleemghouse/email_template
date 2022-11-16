@@ -11,22 +11,41 @@ sap.ui.define([
     return BaseController.extend("emailtemplate.controller.Worklist", {
 
         formatter: formatter,
-        onInit: function () {
+        /* =========================================================== */
+		/* lifecycle methods                                           */
+		/* =========================================================== */
+
+		/**
+		 * Called when the worklist controller is instantiated.
+		 * @public
+		 */
+		onInit: function () {
 			this.getRouter().getRoute("worklist").attachPatternMatched(this._onWorkListMatched, this);
 		},
 
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
-		onCreate: function () {
-			this.getRouter().navTo("object");
+		onCreate: function (oEvent) {
+			var oView = this.getModel("oView");
+			this.getRouter().navTo("object",{
+				type:oView.getProperty("/TemplateType")
+			});
 		},
-		onPress:function(oEvent){
+		onPress: function (oEvent) {
 			var sPath = oEvent.getSource().getBindingContext("oTemp").getPath();
-				sPath=sPath.split("/")[sPath.split("/").length-1];
-				this.getRouter().navTo("display",{
-					item:sPath
-				});
+			sPath = sPath.split("/")[sPath.split("/").length - 1];
+			this.getRouter().navTo("display", {
+				item: sPath
+			});
+		},
+		onResetFilters: function (oEvent) {
+			var oView = this.getModel("oView"),
+				drCrated = this.byId("drCreated");
+			oView.setProperty("/TemplateType", "");
+			oView.setProperty("/Template", "");
+			drCrated.setDateValue(null);
+			drCrated.setSecondDateValue(null);
 		},
 
 		/* =========================================================== */
@@ -34,8 +53,10 @@ sap.ui.define([
 		/* =========================================================== */
 
 		_onWorkListMatched: function () {
-			var oTemplate = models.createTemplate();
+			var oTemplate = models.createTemplate(),
+				oView = models.createOverview();
 			this.getView().setModel(oTemplate, "oTemp");
+			this.getView().setModel(oView, "oView");
 		}
         
     });

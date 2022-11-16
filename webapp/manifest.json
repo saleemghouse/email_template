@@ -110,7 +110,7 @@
           ]
         },
         {
-          "pattern": "TemplateDesc",
+          "pattern": "TemplateDesc/{type}",
           "name": "object",
           "target": [
             "object"

@@ -1,6 +1,19 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto">
-	<Table id="tbPlacehld" items="{path:'oTemp>/Placeholders/',sorter:{path:'Name',descending:true}}" mode="None" headerText="{i18n>LBL_PLACEHOLDER}"
-		noDataText="{i18n>NO_DATA}" growing="true" growingScrollToLoad="true">
+	<Table id="tbPlacehld" mode="{=${oTemp>/Type} ==='pdf' ? 'None': 'MultiSelect'}" noDataText="{i18n>NO_DATA}" growing="true"
+		growingScrollToLoad="true">
+		<headerToolbar>
+			<OverflowToolbar>
+				<Title text="{i18n>LBL_PLACEHOLDER}" level="H1"/>
+				<ToolbarSpacer/>
+				<ComboBox>
+					<items>
+						<core:Item text="Business1" key="bus1"/>
+						<core:Item text="Business2" key="bus2"/>
+						<core:Item text="Business3" key="bus3"/>
+					</items>
+				</ComboBox>
+			</OverflowToolbar>
+		</headerToolbar>
 		<columns>
 			<Column vAlign="Middle">
 				<Label text="{i18n>name}"/>
@@ -9,13 +22,5 @@
 				<Label text="{i18n>techName}"/>
 			</Column>
 		</columns>
-		<items>
-			<ColumnListItem type="Inactive" press="onPress">
-				<cells>
-					<Text text="{oTemp>Name}"/>
-					<Text text="{oTemp>Phnam}"/>
-				</cells>
-			</ColumnListItem>
-		</items>
 	</Table>
 </core:FragmentDefinition>
