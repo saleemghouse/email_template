@@ -4,8 +4,9 @@ sap.ui.define([
     "../model/formatter",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "../model/models"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,models) {
+    "../model/models",
+	"../util/utility"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,models,utility) {
     "use strict";
 
     return BaseController.extend("emailtemplate.controller.Worklist", {
@@ -28,8 +29,8 @@ sap.ui.define([
 		/* =========================================================== */
 		onCreate: function (oEvent) {
 			var oView = this.getModel("oView");
-			this.getRouter().navTo("object",{
-				type:oView.getProperty("/TemplateType")
+			this.getRouter().navTo("object", {
+				type: oView.getProperty("/TemplateType")
 			});
 		},
 		onPress: function (oEvent) {
@@ -47,6 +48,13 @@ sap.ui.define([
 			drCrated.setDateValue(null);
 			drCrated.setSecondDateValue(null);
 		},
+		onDelItem: function (oEvent) {
+			var oResource = this.getResourceBundle(),
+				sTemplate = oEvent.getSource().getBindingContext("oTemp").getProperty("Template_name"),
+				sText = oResource.getText("msgDel", [sTemplate]),
+				sTitle = oResource.getText("msConfirmatn");
+			utility.showConfirmation(sTitle, sText, this, 'DEL');
+		},
 
 		/* =========================================================== */
 		/* internal methods                                            */
@@ -57,7 +65,6 @@ sap.ui.define([
 				oView = models.createOverview();
 			this.getView().setModel(oTemplate, "oTemp");
 			this.getView().setModel(oView, "oView");
-		}
-        
+		}       
     });
 });

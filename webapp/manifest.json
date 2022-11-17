@@ -76,9 +76,11 @@
       }
     },
     "resources": {
-      "css": [{
-        "uri": "css/style.css"
-      }]
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
     },
     "routing": {
       "config": {
@@ -115,7 +117,8 @@
           "target": [
             "object"
           ]
-        }, {
+        },
+        {
           "pattern": "Templatedisply/{item}",
           "name": "display",
           "target": [
@@ -128,20 +131,20 @@
           "viewName": "Worklist",
           "viewId": "worklist",
           "viewLevel": 1,
-          "title": "{i18n>worklistViewTitle}"
+          "title": "{i18n>å}"
         },
         "object": {
-					"viewName": "Object",
-					"viewId": "object",
-					"viewLevel": 2,
-					"title": "{i18n>objectViewTitle}"
-				},
-				"display": {
-					"viewName": "Object",
-					"viewId": "object",
-					"viewLevel": 2,
-					"title": "{i18n>objectViewTitle}"
-				},
+          "viewName": "Object",
+          "viewId": "object",
+          "viewLevel": 2,
+          "title": "{i18n>objectViewTitle}"
+        },
+        "display": {
+          "viewName": "Object",
+          "viewId": "object",
+          "viewLevel": 2,
+          "title": "{i18n>objectViewTitle}"
+        },
         "emailtemplate": {
           "viewName": "emailtemplate",
           "viewId": "emailtemplate",

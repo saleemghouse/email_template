@@ -1,66 +1,73 @@
 <mvc:View controllerName="emailtemplate.controller.Object" xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout">
-    <Page showHeader="false">
+    <Page busy="{oView>/bPageBusy}" busyIndicatorDelay="0" showHeader="false">
         <content>
-            <ObjectHeader title="{oTemp>/Template_name}" responsive="true" visible="{=${View>/mode}==='D'? true: false}">
-                <ObjectAttribute text="{oTemp>/Created_by}" />
+            <ObjectHeader title="{ parts:[{path:'oTemp>/Template_name'},{path:'oView>/TemplateType'},{path:'oView>/mode'}], formatter:'.formatter.setHeaderTitle'}" responsive="true" class="sapUiNoMarginBegin">
+                <ObjectAttribute text="{oTemp>/Created_by}" visible="{=${oView>/mode}==='D'? true: false}" />
             </ObjectHeader>
-            <Panel>
-                <content>
-                    <l:Grid class="sapUiSmallMarginTop" vSpacing="0" hSpacing="1" defaultSpan="XL8 L8 M8 S12">
-                        <VBox>
-                            <Label text="{i18n>LblBusiness}" wrapping="true" required="true" />
-                            <ComboBox change="onChangeBus" placeholder="{i18n>phBusiness}">
-                                <items>
-                                    <core:Item text="Business" key="Bus" />
-                                </items>
-                            </ComboBox>
-                            <layoutData>
-                                <l:GridData span="XL4 L4 M4 S12" />
-                            </layoutData>
-                        </VBox>
-                        <VBox visible="{=${oView>/TemplateType}!=='DMS'}">
-                            <Label text="{i18n>LblAttchmntReq}" wrapping="true" required="true" />
-                            <Switch state="true" customTextOn="Yes" customTextOff="No" enabled="{=${oView>/mode}!=='D'}" />
-                            <layoutData>
-                                <l:GridData span="{=${oView>/TemplateType}!=='DMS'? 'XL4 L4 M4 S12':''}" />
-                            </layoutData>
-                        </VBox>
-                        <VBox visible="{=${oView>/TemplateType}==='DMS'}">
-                            <Label text="{i18n>LblType}" wrapping="true" required="{=${oView>/mode}==='D'? false: true}" />
-                            <ComboBox selectedKey="{oTemp>/Type}"  placeholder="{i18n>phType}" editable="{=${oView>/mode}!=='D'}" change="onChangeTemp">
-                                <items>
-                                    <core:Item text="PDF" key="pdf" />
-                                    <core:Item text="XML" key="xml" />
-                                    <core:Item text="JSON" key="json" />
-                                </items>
-                            </ComboBox>
-                            <layoutData>
-                                <l:GridData span="XL4 L4 M4 S12" linebreak="{=${oView>/TemplateType}!=='DMS'? true : false}" />
-                            </layoutData>
-                        </VBox>
-                        <VBox visible="{=${oView>/mode}==='D'}">
-                            <Label text="{i18n>LblCreatedDate}" wrapping="true" />
-                            <DatePicker editable="false" placeholder="{i18n>phCreateDte}" value="{ path: 'oTemp>/Created_Date', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true,pattern : 'dd.MM.yyyy' } }" />
-                            <layoutData>
-                                <l:GridData span="XL4 L4 M4 S12" linebreak="{=${oView>/TemplateType}!=='DMS'? true : false}" />
-                            </layoutData>
-                        </VBox>
-                        <VBox visible="{=${oView>/mode}==='D'}">
-                            <Label text="{i18n>LblModifiedDte}" wrapping="true" />
-                            <DatePicker editable="false" placeholder="{i18n>phModifiedDte}" value="{ path: 'oTemp>/Modified_Date', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true,pattern : 'dd.MM.yyyy' } }" />
-                            <layoutData>
-                                <l:GridData span="XL4 L4 M4 S12" />
-                            </layoutData>
-                        </VBox>
-                        <!--	<VBox>
+            <Panel backgroundDesign="Solid">
+                <l:Grid class="sapUiSmallMarginTop" vSpacing="0" hSpacing="1" defaultSpan="XL8 L8 M8 S12">
+                    <VBox>
+                        <Label text="{i18n>LblBusiness}" wrapping="true" required="true" />
+                        <ComboBox change="onChangeBus" placeholder="{i18n>phBusiness}" selectedKey="{oTemp>/Business}">
+                            <items>
+                                <core:Item text="Business1" key="Bus1" />
+                                <core:Item text="Business2" key="Bus2" />
+                                <core:Item text="Business3" key="Bus3" />
+                            </items>
+                        </ComboBox>
+                        <layoutData>
+                            <l:GridData span="XL4 L4 M4 S12" />
+                        </layoutData>
+                    </VBox>
+                    <VBox visible="{=${oView>/TemplateType}!=='DMS'}">
+                        <Label text="{i18n>LblAttchmntReq}" wrapping="true" required="true" />
+                        <Switch state="true" customTextOn="Yes" customTextOff="No" enabled="{=${oView>/mode}!=='D'}" />
+                        <layoutData>
+                            <l:GridData span="{=${oView>/TemplateType}!=='DMS'? 'XL4 L4 M4 S12':''}" />
+                        </layoutData>
+                    </VBox>
+                    <VBox visible="{=${oView>/TemplateType}==='DMS'}">
+                        <Label text="{i18n>LblType}" wrapping="true" required="{=${oView>/mode}==='D'? false: true}" />
+                        <ComboBox selectedKey="{oTemp>/Type}" placeholder="{i18n>phType}" editable="{=${oView>/mode}!=='D'}" change="onChangeTemp">
+                            <items>
+                                <core:Item text="PDF" key="pdf" />
+                                <core:Item text="XML" key="xml" />
+                                <core:Item text="JSON" key="json" />
+                            </items>
+                        </ComboBox>
+                        <layoutData>
+                            <l:GridData span="XL4 L4 M4 S12" linebreak="{=${oView>/TemplateType}!=='DMS'? true : false}" />
+                        </layoutData>
+                    </VBox>
+                    <VBox visible="{=${oView>/TemplateType}==='EMP'}">
+                        <Label text="{i18n>LblSubject}" wrapping="true" required="{=${oView>/TemplateType}==='EMP'?true: false}" />
+                        <Input value="{oTemp>/Email_Subject}" placeholder="{i18n>phEmailSubj}" required="{=${oView>/TemplateType}==='EMP'?true: false}" />
+                        <layoutData>
+                            <l:GridData span="XL8 L8 M8 S12" linebreak="{=${oView>/TemplateType}==='EMP'? true : false}" />
+                        </layoutData>
+                    </VBox>
+                    <VBox visible="{=${oView>/mode}==='D'}">
+                        <Label text="{i18n>LblCreatedDate}" wrapping="true" />
+                        <DatePicker editable="false" placeholder="{i18n>phCreateDte}" value="{ path: 'oTemp>/Created_Date', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true,pattern : 'dd.MM.yyyy' } }" />
+                        <layoutData>
+                            <l:GridData span="XL4 L4 M4 S12" linebreak="{=${oView>/TemplateType}!=='DMS'? true : false}" />
+                        </layoutData>
+                    </VBox>
+                    <VBox visible="{=${oView>/mode}==='D'}">
+                        <Label text="{i18n>LblModifiedDte}" wrapping="true" />
+                        <DatePicker editable="false" placeholder="{i18n>phModifiedDte}" value="{ path: 'oTemp>/Modified_Date', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { UTC: true,pattern : 'dd.MM.yyyy' } }" />
+                        <layoutData>
+                            <l:GridData span="XL4 L4 M4 S12" />
+                        </layoutData>
+                    </VBox>
+                    <!--	<VBox>
 					<Label text="{i18n>LblSubject}" wrapping="true" required="true"></Label>
 					<Input value="{oTemp>/Email_subject}" editable="{=${oView>/mode}!=='D'}"/>
 					<layoutData>
 						<l:GridData span="XL8 L8 M8 S12" linebreak="true"/>
 					</layoutData>
 				</VBox>-->
-                    </l:Grid>
-                </content>
+                </l:Grid>
             </Panel>
             <l:Grid class="sapUiSmallMarginTop" vSpacing="0" hSpacing="1" defaultSpan="XL12 L12 M12 S12">
                 <VBox>
@@ -80,7 +87,7 @@
         <footer>
             <OverflowToolbar>
                 <ToolbarSpacer />
-                <Button text="{i18n>btnCancel}"  press="onCancel" type="Transparent" tooltip="{i18n>btnCancel}" />
+                <Button text="{i18n>btnCancel}" press="onCancel" tooltip="{i18n>btnCancel}" />
                 <Button text="{i18n>btnSave}" icon="sap-icon://save" press="onSave" type="Emphasized" tooltip="{i18n>btnSave}" />
             </OverflowToolbar>
         </footer>

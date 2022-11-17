@@ -1,8 +1,8 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto">
-	<ColumnListItem type="Inactive" press="onPress">
-		<cells>
-			<Text text="{oView>Name}"/>
-			<Text text="{oView>Phnam}"/>
-		</cells>
-	</ColumnListItem>
+    <ColumnListItem type="Inactive" press="onPress">
+        <cells>
+            <Text text="{oView>Name}" />
+            <Text text="{oView>Phnam}" />
+        </cells>
+    </ColumnListItem>
 </core:FragmentDefinition>

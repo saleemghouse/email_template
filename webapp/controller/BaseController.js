@@ -1,8 +1,9 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/core/UIComponent",
-    "sap/m/library"
-], function (Controller, UIComponent, mobileLibrary) {
+    "sap/m/library",
+    "sap/m/MessageBox"
+], function (Controller, UIComponent, mobileLibrary, MessageBox) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
@@ -60,23 +61,36 @@ sap.ui.define([
                 oViewModel.getProperty("/shareSendEmailMessage")
             );
         },
+        /**
+          * Event handler when the share by E-Mail button has been clicked
+          * @public
+          */
         onChangeTemp: function (oEvent) {
             var sSelected = oEvent.getSource().getSelectedKey(),
-                tbPlacehld = this.byId("tbPlacehld"),
                 oTemp = this.getModel("oTemp");
             if (sSelected === 'pdf') {
-                tbPlacehld.setVisible(true);
-                this._bindTable();
                 oTemp.setProperty("/Email_body", this.getResourceBundle().getText("EmailBody"));
             } else {
-                tbPlacehld.setVisible(true);
-                this._bindTable();
-                oTemp.setProperty("/Email_body", '');
+                oTemp.setProperty("/Email_body", "");
             }
 
         },
+        onSlctTabls: function (oEvent) {
+            var sKey = oEvent.getSource().getSelectedKey(),
+                aPlaceholdrs = this.getModel("oView").getProperty("/JsonPlacehldr");
+            this._bindTable();
+            if (sKey !== "") {
+                aPlaceholdrs[sKey] = [];
+                this.getModel("oView").setProperty("/JsonPlacehldr", aPlaceholdrs);
+            }
+        },
         _bindTable: function () {
-            var oTemplate = sap.ui.xmlfragment("emailtemplate.view.subview.Items", this);
+            var oTemplate = sap.ui.xmlfragment("emailtemplate.view.subview.Items", this),
+                oView = this.getModel("oView"),
+                aDPlaceholders = oView.getProperty("/DPlaceholders");
+            if (aDPlaceholders !== '') {
+                oView.setProperty("/Placeholders", aDPlaceholders);
+            }
             /*		this.byId("tbPlacehld").bindAggregation("items", {
                         path: "oView>/Placeholders/",
                         template: oTemplate,
@@ -89,7 +103,6 @@ sap.ui.define([
             });
         },
 
-      
     });
 
 });

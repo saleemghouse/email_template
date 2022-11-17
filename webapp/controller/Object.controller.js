@@ -3,15 +3,16 @@ sap.ui.define([
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/core/routing/History",
 	"../model/formatter",
-	"../model/models"
-], function (BaseController, JSONModel, History, formatter, models) {
+	"../model/models",
+	"../util/utility"
+], function (BaseController, JSONModel, History, formatter, models,utility) {
 	"use strict";
 
 	return BaseController.extend("emailtemplate.controller.Object", {
 
 		formatter: formatter,
 
-    /* =========================================================== */
+		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
 
@@ -30,7 +31,56 @@ sap.ui.define([
 		/* =========================================================== */
 		/* event handlers                                              */
 		/* =========================================================== */
+		onSlctPlcehlds: function (oEvent) {
+			var aSelectItems = oEvent.getSource().getSelectedItems();
+			if (aSelectItems.length > 0) {
+				for (var i = 0; i < aSelectItems.length; i++) {
+					var oData = aSelectItems[i].getBindingContext("oView").getObject(),
+						sName = oData.Name,
+						sPhnam = oData.Phnam,
+						aTables = this.byId("cbTables").getSelectedItem(),
+						sTable = aTables.getText(),
+						oTemp = this.getModel("oTemp"),
+						aPlaceholdrs = this.getModel("oView").getProperty("/JsonPlacehldr");
+					aPlaceholdrs[sTable].push({
+						[sName]: sPhnam
+					});
+					this.getModel("oView").setProperty("/JsonPlacehldr", aPlaceholdrs);
+					var sEmail_Body = JSON.stringify(aPlaceholdrs);
+					oTemp.setProperty("/Email_body", sEmail_Body);
+				}
+			}
+		},
 
+		onCancel: function () {
+			var oResource = this.getResourceBundle(),
+				sText = oResource.getText("msgCnclPrcs"),
+				sTitle = oResource.getText("msConfirmatn");
+			utility.showConfirmation(sTitle, sText, this, 'CANCEL');
+		},
+
+		onDelTable: function (oEvent) {
+			var aJsonPlacehldr = this.getModel("oView").getProperty("/JsonPlacehldr"),
+				aPlaceholders = this.getModel("oView").getProperty("/Placeholders"),
+				aTables = this.byId("cbTables").getSelectedItem(),
+				sTable = aTables.getText(),
+				oTemp = this.getModel("oTemp");
+			if (sTable !== "") {
+				for (const property in aJsonPlacehldr) {
+					if (property === sTable) {
+						delete aJsonPlacehldr[property];
+					}
+				}
+				this.getModel("oView").setProperty("/JsonPlacehldr", aJsonPlacehldr);
+				var iObjLength = Object.keys(aJsonPlacehldr).length,
+					sEmail_Body = iObjLength === 0 ? '' : JSON.stringify(aJsonPlacehldr);
+				oTemp.setProperty("/Email_body", sEmail_Body);
+				oTemp.setProperty("/Column", "");
+				this.getModel("oView").setProperty("/Placeholders", "");
+				this.getModel("oView").setProperty("/DPlaceholders", aPlaceholders);
+			}
+
+		},
 		/**
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
@@ -48,17 +98,18 @@ sap.ui.define([
 		 */
 		_onObjectMatched: function (oEvent) {
 			var oUploadSet = this.byId("usTemplate"),
-				tbPlacehld = this.byId("tbPlacehld"),
 				oView = this.getModel("oView"),
+				/*	oResource = this.getResourceBundle(),*/
 				sType = oEvent.getParameter("arguments").type,
 				oTemplate = models.createTemplateId();
 			oView.setProperty("/TemplateType", sType);
 			oView.setProperty("/mode", "C");
+			/*	oTemplate.getData().Email_body= oResource.getText('EmailBody');*/
 			this.getView().setModel(oTemplate, "oTemp");
-			tbPlacehld.setVisible(false);
 			oUploadSet.getDefaultFileUploader().setButtonOnly(false);
 			oUploadSet.getDefaultFileUploader().setIconOnly(true);
 			oUploadSet.getDefaultFileUploader().setIcon("sap-icon://attachment");
+			oView.setProperty("/bPageBusy", false);
 		},
 		_onDisplayMatched: function (oEvent) {
 			var sItem = oEvent.getParameter("arguments").item,
@@ -67,6 +118,7 @@ sap.ui.define([
 			oTemplate = new JSONModel(oTemplate.getData().Templates[parseInt(sItem)]);
 			oView.setProperty("/mode", "D");
 			this.getView().setModel(oTemplate, "oTemp");
+			oView.setProperty("/bPageBusy", false);
 		},
 
 		/**
@@ -117,6 +169,7 @@ sap.ui.define([
 			oViewModel.setProperty("/busy", false);
 		}
 
-});
+
+	});
 
 });

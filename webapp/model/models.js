@@ -26,6 +26,7 @@ sap.ui.define([
 					Template_name: 'ZGEAEM001',
 					Temoplate_desc: 'Account creation',
 					Email_body: '',
+					Business: 'Bus1',
 					Email_subject: 'Account created successfully',
 					Attach_req: false,
 					Created_by: "NCS_SHAP",
@@ -38,6 +39,7 @@ sap.ui.define([
 					Template_name: 'ZGEAEM002',
 					Temoplate_desc: 'Account created successfully',
 					Email_body: '',
+					Business: 'Bus1',
 					Email_subject: 'Account created successfully',
 					Attach_req: false,
 					Created_by: "NCS_SHAP",
@@ -50,6 +52,7 @@ sap.ui.define([
 					Template_name: 'ZGEAEM003',
 					Temoplate_desc: 'Account created successfully',
 					Email_body: '',
+					Business: 'Bus2',
 					Email_subject: 'Account created successfully',
 					Attach_req: false,
 					Created_by: "NCS_SHAP",
@@ -62,6 +65,7 @@ sap.ui.define([
 					Template_name: 'ZGEAEM004',
 					Temoplate_desc: 'Account created successfully',
 					Email_body: '',
+					Business: 'Bus3',
 					Email_subject: 'Account created successfully',
 					Attach_req: false,
 					Created_by: "NCS_SHAP",
@@ -73,6 +77,7 @@ sap.ui.define([
 					Template_name: 'ZGEAEM005',
 					Temoplate_desc: 'Account created successfully',
 					Email_body: '',
+					Business: 'Bus2',
 					Email_subject: 'Account created successfully',
 					Attach_req: false,
 					Type: "pdf",
@@ -97,18 +102,22 @@ sap.ui.define([
 			var oView = new JSONModel({
 				mode: "C",
 				TemplateType: "",
+				JsonPlacehldr: {},
+				DPlaceholders: "",
+				bPageBusy: true,
+				Email_Subject: "",
 				Placeholders: [{
-					Name: "Logo",
-					Phnam: "$LOGO$"
+					Name: "PO_Number",
+					Phnam: "{T_PHEADER}-NUMBER"
 				}, {
-					Name: "Address",
-					Phnam: "$ADDRESS$"
+					Name: "Name",
+					Phnam: "{T_PHEADER}-NAME"
 				}, {
-					Name: "Start Body",
-					Phnam: "$Start_Body$"
+					Name: "PO_ADRESS",
+					Phnam: "{T_PHEADER}-ADDRESS"
 				}, {
-					Name: "End Body",
-					Phnam: "$End_Body$"
+					Name: "PO_UNIT",
+					Phnam: "{T_PHEADER}-UNIT"
 				}, {
 					Name: "Items",
 					Phnam: "$T_POITEMS$"
@@ -119,10 +128,12 @@ sap.ui.define([
 		},
 		createTemplateId: function () {
 			var oModel = new JSONModel({
-					Email_body: '',
-					Attach_req: false,
-					Type:'',
-					EMAILBODY:''
+				Email_body: '',
+				Attach_req: false,
+				Type: '',
+				EMAILBODY: '',
+				Business: '',
+				Column: ''
 			});
 			return oModel;
 		}

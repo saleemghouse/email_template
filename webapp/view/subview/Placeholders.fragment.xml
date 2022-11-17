@@ -1,26 +1,28 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto">
-	<Table id="tbPlacehld" mode="{=${oTemp>/Type} ==='pdf' ? 'None': 'MultiSelect'}" noDataText="{i18n>NO_DATA}" growing="true"
-		growingScrollToLoad="true">
-		<headerToolbar>
-			<OverflowToolbar>
-				<Title text="{i18n>LBL_PLACEHOLDER}" level="H1"/>
-				<ToolbarSpacer/>
-				<ComboBox>
-					<items>
-						<core:Item text="Business1" key="bus1"/>
-						<core:Item text="Business2" key="bus2"/>
-						<core:Item text="Business3" key="bus3"/>
-					</items>
-				</ComboBox>
-			</OverflowToolbar>
-		</headerToolbar>
-		<columns>
-			<Column vAlign="Middle">
-				<Label text="{i18n>name}"/>
-			</Column>
-			<Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
-				<Label text="{i18n>techName}"/>
-			</Column>
-		</columns>
-	</Table>
+    <Table id="tbPlacehld" mode="{=${oTemp>/Type} ==='pdf' ? 'None': 'MultiSelect'}" noDataText="{i18n>NO_DATA}" growing="true" growingScrollToLoad="true" selectionChange="onSlctPlcehlds">
+        <headerToolbar>
+            <OverflowToolbar>
+                <Title text="{i18n>LBL_PLACEHOLDER}" level="H1" />
+                <ToolbarSpacer />
+                <HBox>
+                    <ComboBox id="cbTables" change="onSlctTabls" placeholder="{i18n>phColumns}" selectedKey="{oTemp>/Column}">
+                        <items>
+                            <core:Item text="Table1" key="Table1" />
+                            <core:Item text="Table2" key="Table2" />
+                            <core:Item text="Table3" key="Table3" />
+                        </items>
+                    </ComboBox>
+                    <core:Icon src="sap-icon://delete" press="onDelTable" class="sapUiTinyMarginTop sapUiTinyMarginBegin" visible="{= ${oTemp>/Type} ==='pdf' || ${oTemp>/Type} ==='' ? false: true}" />
+                </HBox>
+            </OverflowToolbar>
+        </headerToolbar>
+        <columns>
+            <Column vAlign="Middle">
+                <Label text="{i18n>name}" />
+            </Column>
+            <Column vAlign="Middle" minScreenWidth="Tablet" demandPopin="true">
+                <Label text="{i18n>techName}" />
+            </Column>
+        </columns>
+    </Table>
 </core:FragmentDefinition>

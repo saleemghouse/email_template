@@ -3,17 +3,16 @@ sap.ui.define([], function () {
 
     return {
 
-        /**
-         * Rounds the number unit value to 2 digits
-         * @public
-         * @param {string} sValue the number string to be rounded
-         * @returns {string} sValue with 2 digits rounded
-         */
-        numberUnit : function (sValue) {
-            if (!sValue) {
-                return "";
+        setHeaderTitle: function (sTempName, sTempType, sMode) {
+            var sTitle,
+                oResource = this.getResourceBundle();
+            if (sMode === 'C') {
+                sTitle = sTempType === 'EMP' ? oResource.getText('TxtEmpTitle') : oResource.getText('TxtDMSTitle');
+                return sTitle;
+            } else {
+                return sTempName;
             }
-            return parseFloat(sValue).toFixed(2);
+
         }
 
     };
