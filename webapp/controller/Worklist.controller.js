@@ -1,18 +1,19 @@
 sap.ui.define([
-    "./BaseController",
-    "sap/ui/model/json/JSONModel",
-    "../model/formatter",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "../model/models",
-	"../util/utility"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,models,utility) {
-    "use strict";
+	"./BaseController",
+	"sap/ui/model/json/JSONModel",
+	"../model/formatter",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator",
+	"../model/models",
+	"../util/utility",
+	"sap/ui/core/Fragment"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator, models, utility, Fragment) {
+	"use strict";
 
-    return BaseController.extend("emailtemplate.controller.Worklist", {
+	return BaseController.extend("emailtemplate.controller.Worklist", {
 
-        formatter: formatter,
-        /* =========================================================== */
+		formatter: formatter,
+		/* =========================================================== */
 		/* lifecycle methods                                           */
 		/* =========================================================== */
 
@@ -56,6 +57,43 @@ sap.ui.define([
 			utility.showConfirmation(sTitle, sText, this, 'DEL');
 		},
 
+		onValueHelpRequest: function (oEvent) {
+			var sInputValue = oEvent.getSource().getValue(),
+				oView = this.getView();
+			if (!this._pValueHelpDialog) {
+				this._pValueHelpDialog = Fragment.load({
+					id: oView.getId(),
+					name: "emailtemplate.fragments.Template",
+					controller: this
+				}).then(function (oDialog) {
+					oView.addDependent(oDialog);
+					return oDialog;
+				});
+			}
+			this._pValueHelpDialog.then(function (oDialog) {
+				// Create a filter for the binding
+				/*	oDialog.getBinding("items").filter([new Filter("Name", FilterOperator.Contains, sInputValue)]);*/
+				// Open ValueHelpDialog filtered by the input's value
+				oDialog.open();
+			});
+		},
+
+		onValueHelpSearch: function (oEvent) {
+			var sValue = oEvent.getParameter("value");
+			/*		var oFilter = new Filter("Name", FilterOperator.Contains, sValue);
+					oEvent.getSource().getBinding("items").filter([oFilter]);*/
+		},
+
+		onValueHelpClose: function (oEvent) {
+			var oSelectedItem = oEvent.getParameter("selectedItem"),
+				oView = this.getModel("oView");
+			/*oEvent.getSource().getBinding("items").filter([]);
+			if (!oSelectedItem) {
+				return;
+			}*/
+			oView.setProperty("/Template", oSelectedItem.getTitle());
+		},
+
 		/* =========================================================== */
 		/* internal methods                                            */
 		/* =========================================================== */
@@ -65,6 +103,7 @@ sap.ui.define([
 				oView = models.createOverview();
 			this.getView().setModel(oTemplate, "oTemp");
 			this.getView().setModel(oView, "oView");
-		}       
-    });
+		}
+
+	});
 });

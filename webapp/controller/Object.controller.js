@@ -5,7 +5,7 @@ sap.ui.define([
 	"../model/formatter",
 	"../model/models",
 	"../util/utility"
-], function (BaseController, JSONModel, History, formatter, models,utility) {
+], function (BaseController, JSONModel, History, formatter, models, utility) {
 	"use strict";
 
 	return BaseController.extend("emailtemplate.controller.Object", {
@@ -32,7 +32,8 @@ sap.ui.define([
 		/* event handlers                                              */
 		/* =========================================================== */
 		onSlctPlcehlds: function (oEvent) {
-			var aSelectItems = oEvent.getSource().getSelectedItems();
+			var aSelectItems = oEvent.getSource().getSelectedItems(),
+				sEmail_Body;
 			if (aSelectItems.length > 0) {
 				for (var i = 0; i < aSelectItems.length; i++) {
 					var oData = aSelectItems[i].getBindingContext("oView").getObject(),
@@ -46,7 +47,11 @@ sap.ui.define([
 						[sName]: sPhnam
 					});
 					this.getModel("oView").setProperty("/JsonPlacehldr", aPlaceholdrs);
-					var sEmail_Body = JSON.stringify(aPlaceholdrs);
+					if (oTemp.getProperty("/Type") === 'xml') {
+						sEmail_Body = utility.xmlToJson(aPlaceholdrs);
+					} else {
+						sEmail_Body = JSON.stringify(aPlaceholdrs);
+					}
 					oTemp.setProperty("/Email_body", sEmail_Body);
 				}
 			}
@@ -81,6 +86,9 @@ sap.ui.define([
 			}
 
 		},
+		onChangeBus: function (oEvent) {
+			this.byId("tbPlacehld").setVisible(true);
+		},
 		/**
 		 * Event handler when the share in JAM button has been clicked
 		 * @public
@@ -104,6 +112,7 @@ sap.ui.define([
 				oTemplate = models.createTemplateId();
 			oView.setProperty("/TemplateType", sType);
 			oView.setProperty("/mode", "C");
+			this.byId("tbPlacehld").setVisible(false);
 			/*	oTemplate.getData().Email_body= oResource.getText('EmailBody');*/
 			this.getView().setModel(oTemplate, "oTemp");
 			oUploadSet.getDefaultFileUploader().setButtonOnly(false);
@@ -149,7 +158,6 @@ sap.ui.define([
 				}
 			});
 		},
-
 		_onBindingChange: function () {
 			var oView = this.getView(),
 				oViewModel = this.getModel("objectView"),

@@ -1,26 +1,28 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" width="auto" xmlns:fb="sap.ui.comp.filterbar">
-    <fb:FilterBar clear="onResetFilters" showFilterConfiguration="false" search="onSearchTempate" showRestoreButton="false" showClearButton="true" showClearOnFB="true" showGoOnFB="true">
-        <fb:filterItems>
-            <fb:FilterItem name="TemplateType" label="{i18n>LblTemplateType}" labelTooltip="{i18n>LblTemplateType}">
-                <fb:control>
-                    <ComboBox selectedKey="{oView>/TemplateType}">
-                        <items>
-                            <core:Item text="Email Template" key="EMP" />
-                            <core:Item text="DMS Template" key="DMS" />
-                        </items>
-                    </ComboBox>
-                </fb:control>
-            </fb:FilterItem>
-            <fb:FilterItem name="templates" label="{i18n>LblTemplate}" labelTooltip="{i18n>LblTemplate}">
-                <fb:control>
-                    <Input value="{oView>/Template}" placeholder="{i18n>phTemplate}" />
-                </fb:control>
-            </fb:FilterItem>
-            <fb:FilterItem name="CreatedBy" label="{i18n>LblCreated}" labelTooltip="{i18n>LblCreated}">
-                <fb:control>
-                    <DateRangeSelection id="drCreated" displayFormat="dd.MM.yyyy" placeholder="{i18n>phDateRangeDisplayFormat}" width="100%" />
-                </fb:control>
-            </fb:FilterItem>
-        </fb:filterItems>
-    </fb:FilterBar>
+	<fb:FilterBar clear="onResetFilters" showFilterConfiguration="false" search="onSearchTempate" showRestoreButton="false"
+		showClearButton="true" showClearOnFB="true" showGoOnFB="true">
+		<fb:filterItems>
+			<fb:FilterItem name="TemplateType" label="{i18n>LblTemplateType}" labelTooltip="{i18n>LblTemplateType}">
+				<fb:control>
+					<ComboBox selectedKey="{oView>/TemplateType}">
+						<items>
+							<core:Item text="Email Template" key="EMP"/>
+							<core:Item text="DMS Template" key="DMS"/>
+						</items>
+					</ComboBox>
+				</fb:control>
+			</fb:FilterItem>
+			<fb:FilterItem name="templates" label="{i18n>LblTemplate}" labelTooltip="{i18n>LblTemplate}">
+				<fb:control>
+					<Input value="{oView>/Template}" placeholder="{i18n>phTemplate}" valueHelpRequest=".onValueHelpRequest" showSuggestion="true"
+						showValueHelp="true"/>
+				</fb:control>
+			</fb:FilterItem>
+			<fb:FilterItem name="CreatedBy" label="{i18n>LblCreated}" labelTooltip="{i18n>LblCreated}">
+				<fb:control>
+					<DateRangeSelection id="drCreated" displayFormat="dd.MM.yyyy" placeholder="{i18n>phDateRangeDisplayFormat}" width="100%"/>
+				</fb:control>
+			</fb:FilterItem>
+		</fb:filterItems>
+	</fb:FilterBar>
 </core:FragmentDefinition>
